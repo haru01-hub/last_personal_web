@@ -179,7 +179,7 @@ export default function AddTopic() {
 
       if (res.ok) {
         console.log('Topic created successfully!')
-        router.push('/')
+        router.push(`/${category}`)
       } else {
         const errorData = await res.json()
         console.error('Failed to post:', errorData)
