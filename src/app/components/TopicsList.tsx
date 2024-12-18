@@ -1,9 +1,9 @@
-'use client'
+// 'use client'
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import TopicView from 'src/app/components/TopicView'
-const apiUrl = process.env.NEXT_PUBLIC_API_URL
+// const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
 interface Topic {
   _id: string
@@ -33,9 +33,7 @@ export default function TopicsList({ category }: TopicListProps) {
     console.log('Current category:', category)
     async function fetchTopics() {
       try {
-        const res = await fetch(
-          `${apiUrl}/api/${category}?category=${category}`
-        )
+        const res = await fetch(`/api/${category}?category=${category}`)
         if (!res.ok) {
           const errorText = await res.text() // Fetch the error message from the response
           console.error('Failed to fetch topics:', res.status, errorText) //여기 수정해버렸다=====원래 없었음.
@@ -73,7 +71,7 @@ export default function TopicsList({ category }: TopicListProps) {
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this topic?')) {
       try {
-        const res = await fetch(`${apiUrl}/api/${category}/${id}`, {
+        const res = await fetch(`/api/${category}/${id}`, {
           method: 'DELETE',
         })
         if (res.ok) {
@@ -174,3 +172,87 @@ export default function TopicsList({ category }: TopicListProps) {
     </div>
   )
 }
+// 'use client'
+
+// import React, { useEffect, useState } from 'react'
+// import Link from 'next/link'
+
+// // const apiUrl = process.env.NEXT_PUBLIC_API_URL
+
+// interface Topic {
+//   _id: string
+//   title: string
+//   description: string
+//   createdAt: string
+//   updatedAt: string
+//   category: string
+//   year: string
+// }
+
+// interface TopicListProps {
+//   category: string
+// }
+
+// export default function TopicsList({ category }: TopicListProps) {
+//   const [topics, setTopics] = useState<Topic[]>([])
+//   const [selectedYear, setSelectedYear] = useState('2024')
+//   const [loading, setLoading] = useState(true)
+//   const [error, setError] = useState<string | null>(null)
+
+//   const fixedYears = ['2024', '2025', '2026', '2027', '2028', '2029']
+
+//   useEffect(() => {
+//     async function fetchTopics() {
+//       try {
+//         const res = await fetch(`/api/${category}?category=${category}`)
+//         if (!res.ok) {
+//           throw new Error(`Failed to fetch topics: ${res.statusText}`)
+//         }
+//         const data = await res.json()
+//         console.log('Fetched topics:', data.topics) // Debugging log
+//         setTopics(data.topics || [])
+//       } catch (err) {
+//         console.error('Error loading topics:', err)
+//         setError('Failed to load topics.')
+//       } finally {
+//         setLoading(false)
+//       }
+//     }
+//     fetchTopics()
+//   }, [category])
+
+//   return (
+//     <div>
+//       <div className="flex border-b-2 border-slate-400 mt-4">
+//         {fixedYears.map((year) => (
+//           <h3
+//             key={year}
+//             onClick={() => setSelectedYear(year)}
+//             className={`mt-10 text-xl font-bold text-gray-500 md:pr-5 md:pl-5 md:pt-2 md:pb-2 border-t-2 border-l-2 border-slate-400 cursor-pointer
+//             ${selectedYear === year ? 'bg-slate-300' : ''}`}
+//           >
+//             {year}년
+//           </h3>
+//         ))}
+//       </div>
+
+//       <div className="bg-slate-100">
+//         {loading ? (
+//           <p>Loading...</p>
+//         ) : error ? (
+//           <p>Error: {error}</p>
+//         ) : (
+//           topics.map((topic) => (
+//             <div key={topic._id} className="p-4 hover:bg-slate-200">
+//               <p>{topic.title}</p>
+//             </div>
+//           ))
+//         )}
+//       </div>
+
+//       <Link href={{ pathname: '/addTopic', query: { category } }}>
+//         <button className="bg-gray-200 p-3 mt-2 rounded-full">Add Topic</button>
+//       </Link>
+//     </div>
+//   )
+// }
