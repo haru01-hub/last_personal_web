@@ -265,23 +265,11 @@ export default function TopicsList({ category }: TopicListProps) {
   return (
     <div>
       {editingTopic ? (
-        <div className="p-4">
+        <div className="p-10">
           <TopicView topic={editingTopic} handleDelete={handleDelete} />
         </div>
       ) : (
         <>
-          {/* Default로 맨 위에 고정된 내용 */}
-          {/* <h3 className="font-mono text-xl">CLOUD</h3>
-          <div className="border-2 border-slate-400 p-4 mt-4 bg-gray-100 rounded-lg shadow-lg ppi-d">
-            <h3 className="font-bold mb-1">PLAN</h3>
-            <hr />
-            <p className="mt-1">
-              클라우드는 아직 배우지는 않았지만 시스템 보안 분야 쪽을 공부하기
-              위해서는 반드시 알아야 하는 요소라고 하여 클라우드 분야를 공부해볼
-              예정입니다.
-            </p>
-          </div> */}
-
           {/* 연도 선택 탭 */}
           <div className="flex border-b-2 border-slate-400 mt-4">
             {fixedYears.map((year) => (
@@ -327,7 +315,10 @@ export default function TopicsList({ category }: TopicListProps) {
                       </p>
                       <button
                         className="text-gray-500 hover:text-emerald-300 ml-4"
-                        onClick={() => handleDelete(topic._id)} // 삭제 함수 호출
+                        onClick={(e) => {
+                          e.stopPropagation() // 이벤트 전파 중지
+                          handleDelete(topic._id)
+                        }} // 삭제 함수 호출
                       >
                         <FaTrash size={20} />
                       </button>

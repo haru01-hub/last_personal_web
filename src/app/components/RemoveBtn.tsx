@@ -21,6 +21,7 @@ export default function RemoveBtn({
       })
       if (res.ok) {
         router.refresh() // 페이지 새로 고침
+        router.push(`/${category}`)
       } else {
         alert('Failed to delete the topic')
       }
